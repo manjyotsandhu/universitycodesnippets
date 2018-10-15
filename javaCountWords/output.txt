@@ -1,0 +1,5 @@
+Counted total length 971501 in 18890194 nanoseconds.
+Function 1A found 17930 unique words in 58072275 nanoseconds.
+Function 1B found 17930 unique words in 97235570 nanoseconds.
+Function 1C found 17930 unique words in 5087994470 nanoseconds.
+Function 2A found 8001 words that occur once.
