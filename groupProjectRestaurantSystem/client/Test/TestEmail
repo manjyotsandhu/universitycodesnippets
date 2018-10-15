@@ -1,0 +1,39 @@
+package client.app;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import javax.mail.internet.AddressException;
+
+import client.app.Email;
+import client.app.Special;
+
+import org.junit.Test;
+
+/**
+ * 
+ * @author Martin
+ *
+ */
+public class TestEmail {
+	
+	static Email email;
+	Special special;
+
+	@Test
+	public void testSendEmail() throws AddressException {
+		email.sendEmail();
+	}
+	
+	@Test
+	public static void testGetRegisteredEmails() {
+		email.getRegisteredEmails();
+	}
+	
+	@Test
+	public static void testGetText() {
+		email.getText();
+	}
+
+}

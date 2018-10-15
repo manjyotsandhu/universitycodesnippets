@@ -1,0 +1,27 @@
+package client.app;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * 
+ * @author Martin
+ *
+ */
+public class TestSpecial {
+
+	Special special;
+	MenuItem item;
+	
+	public void testCreateSpecialOffer() {
+		special.createSpecialOffer(item, 0.1);
+	}
+	
+	public void testDeleteSpecialOffer() {
+		Special.deleteSpecialOffer(item, 1);
+	}
+	
+	
+
+}

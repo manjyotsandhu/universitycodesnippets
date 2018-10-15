@@ -1,0 +1,56 @@
+package client.app;
+
+import static org.junit.Assert.*;
+
+import java.util.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import client.app.Ingredient;
+import client.app.MenuItem;
+import client.app.Menu;
+
+/**
+ * 
+ * @author Martin
+ *
+ */
+public class TestMenu {
+	private ArrayList<Ingredient> ingredients;
+	private MenuItem menuItem;
+	Menu menu1;
+
+	@Before
+	public void setUp() {
+		Ingredient a = new Ingredient(1, "chicken", true, 30, "none", 0, 2.00);
+		Ingredient b = new Ingredient(2, "rice", false, 10, "none", 0, 0.30);
+		
+		a.addQuantity(5);
+		b.addQuantity(5);
+
+		ingredients = new ArrayList<Ingredient>();
+		ingredients.add(a);
+		ingredients.add(b);
+
+		menuItem = new MenuItem(1, "chicken and rice", 8.00, ingredients);
+		
+		menu1 = new Menu();
+	}
+	
+	@Test
+	public void testReturnCalories() {
+		assertEquals("Testing correct return of calories", 40, menu1.returnCalories(menuItem), 0.1);
+	}
+	
+	@Test
+	public void testUpdateMenu() {
+		menu1.updateMenu();
+	}
+	
+	@Test
+	public void testAddToMenu() {
+		menu1.addToMenu(menuItem);
+	}
+	
+}

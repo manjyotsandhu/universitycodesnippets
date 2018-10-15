@@ -1,0 +1,301 @@
+# NOTE: This code must be run on codeskulptor.org
+# http://www.codeskulptor.org/#user45_7R3cWfSm08_16.py
+
+import simplegui, random
+
+class Card:
+    
+    listSuit = ('Clubs', 'Hearts', 'Spades', 'Diamonds')
+    valuesDictionary = {'ACE': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen':10, 'King': 10} 
+    listRank = ('ACE', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King')
+    
+    def __init__(self, suit, rank, *card):
+        self.suit = suit
+        self.rank = rank
+        
+        #setting frame index for sprite sheet
+        for i in self.listSuit:
+            if (suit == i):
+                self.yframeIndex = self.listSuit.index(i)
+        for v in self.listRank:
+            if (rank == v):
+                self.xframeIndex = self.listRank.index(v)
+        self.frameIndex = (self.xframeIndex, self.yframeIndex)
+        
+        
+    def getValueCard(self):
+        return self.valuesDictionary[self.rank]
+    
+    def draw_handler(self, canvas, cardPos):
+        canvas.draw_image(
+            game.imgFront,
+            (game.frontframeWidth * self.frameIndex[0] + game.frontframeCentreX, game.frontframeHeight * self.frameIndex[1] + game.frontframeCentreY),
+            (game.frontframeWidth, game.frontframeHeight),
+            (cardPos[0], cardPos[1]),
+            (game.frontframeWidth, game.frontframeHeight)
+            )
+            
+class Deck:
+    def __init__(self, *deck):
+        self.deckList = []
+        for i in Card.listSuit:
+            for v in Card.listRank:
+                self.deckList.append(Card(i, v))
+            
+    def shuffleDeck(self):
+        random.shuffle(self.deckList)    
+    
+    def dealtCard(self):
+        dealt_card = self.deckList[0]
+        self.deckList.remove(dealt_card)
+        return dealt_card
+
+
+class Hand: 
+    
+    def __init__(self):
+        self.currentHand = []
+        
+    def addCardtoHand(self):
+        self.currentHand.append(game.deck.dealtCard())
+    
+    def returnHandScore(self): 
+        self.handScore = 0 
+        acePresent = False
+        for i in self.currentHand:
+            self.handScore += i.getValueCard()
+            if (i.rank == 'ACE'):
+                acePresent = True
+        if (acePresent == True):
+            if (self.handScore + 10 <= 21):
+                self.handScore += 10
+        return self.handScore
+    
+    def busted(self):
+        if self.returnHandScore() > 21:
+            return True
+        
+    def dealer_draw(self, canvas, handPos):
+        for i in self.currentHand:
+            card = Card(i.suit, i.rank)
+            card.draw_handler(canvas, handPos)
+            handPos[0] += 80 
+            
+    def player_draw(self, canvas, handPos):
+        for i in self.currentHand:
+            card = Card(i.suit, i.rank)
+            if (game.useCover == True):
+                if (i == self.currentHand[len(self.currentHand)-1]):
+                    card.draw_handler(canvas, [-100, -100])
+                else:
+                    card.draw_handler(canvas, handPos)
+            if (game.useCover == False):
+                card.draw_handler(canvas, handPos)
+            handPos[0] += 80 
+            
+class Game:
+    def __init__(self, *game):
+        
+        #game constants
+        self.CANVAS_DIMS = (900, 600)
+        self.middleCanvas = self.CANVAS_DIMS[0]/2
+        self.buttonGap = 20
+        
+        self.xPos = 800
+        self.yPos = 100
+        
+        #sprite image constants for back of card
+        self.imgBack = simplegui.load_image('http://www.cs.rhul.ac.uk/courses/CS1830/sprites/card-back.png')
+        self.backframeWidth = 72
+        self.backframeHeight = 96
+        self.backframeCentreX = self.backframeWidth/2
+        self.backframeCentreY = self.backframeHeight/2
+        
+        #sprite image constants for front of card
+        self.imgFront = simplegui.load_image('http://www.cs.rhul.ac.uk/courses/CS1830/sprites/cards-sprite-sheet.png')
+        self.frontframeWidth = 939/13
+        self.frontframeHeight = 384/4
+        self.frontframeCentreX = self.frontframeWidth/2
+        self.frontframeCentreY = self.frontframeHeight/2
+    
+        #game variables
+        self.playerTotalScore = 0
+        self.dealerPlaying = False
+        self.gameStart = False
+        self.gameFinished = False
+        self.playerWin = False
+        self.message = ""
+        
+        #other loaded images
+        self.bgImg = simplegui.load_image('http://s22.postimg.org/9pffba0jl/gamesassbk.png')  
+        self.titleImg = simplegui.load_image('http://s18.postimg.org/ohf35hcyx/games_Assignment.png')
+        
+        #inital creation of deck and hands
+        self.deck = Deck()
+        self.deck.shuffleDeck()
+        self.dealer = Hand()
+        self.player = Hand()
+        
+        #for card animation
+        self.xDist = 800
+        self.drawCard = False
+        self.useCover = False
+        
+    def draw_back(self, canvas, cardPos):
+        canvas.draw_image(
+            game.imgBack,
+            (game.backframeCentreX, game.backframeCentreY),
+            (game.backframeWidth, game.backframeHeight),
+            (cardPos[0], cardPos[1]),
+            (game.backframeWidth, game.backframeHeight)
+            )
+        
+    def test_handler(self):
+        self.drawCard = True
+        
+    def deal_handler(self):
+        if (self.gameStart == False):
+            self.dealerPlaying = False
+            self.gameFinished = False
+            self.gameStart = True
+            
+            self.message = "Hit or Stand?"
+            
+            #new game
+            self.player.currentHand = []
+            self.dealer.currentHand = []
+            self.deck = Deck()
+            self.deck.shuffleDeck()
+        
+            self.player.addCardtoHand()
+            self.player.addCardtoHand()
+
+            self.dealer.addCardtoHand()
+            self.dealer.addCardtoHand()
+
+            if (self.player.returnHandScore == 21): #if player has 21, dealers turn
+                self.dealerTurn()
+        
+    def hit_handler(self):
+        if (self.gameStart == True and self.dealerPlaying == False):
+            game.test_handler()
+            self.player.addCardtoHand()
+            if (self.player.returnHandScore == 21): #if 21, dealers turn
+                self.dealerTurn()
+                
+            if (self.player.busted()):
+                self.gameStart = False
+                self.gameFinished = True
+                self.message = "You lose! New deal?"
+                self.playerTotalScore -= 1
+                             
+    def stand_handler(self):
+        if (self.gameStart == True and self.dealerPlaying == False):
+            self.dealerTurn()
+            
+    def dealerTurn(self):
+        self.dealerPlaying = True
+        
+        while (self.dealer.returnHandScore() < 17): # keeps adding cards
+            self.dealer.addCardtoHand()
+
+        if (self.dealer.busted()):
+            self.gameStart = False
+            self.gameFinished = True
+            self.message = "You win! New deal?"
+            self.playerTotalScore += 1
+                
+        elif (self.dealer.returnHandScore() >= 17): 
+            self.gameStart = False
+            self.dealerPlaying = False
+        
+            if (self.player.returnHandScore() > self.dealer.returnHandScore()):
+                self.message = "You win! New deal?"
+                self.playerTotalScore += 1
+            if (self.player.returnHandScore() <= self.dealer.returnHandScore()):
+                self.message = "You lose! New deal?"
+                self.playerTotalScore -= 1
+            
+            self.gameFinished = True
+
+game = Game()
+
+def draw_handler(canvas):
+   
+    #title and title images
+    titlePos = game.CANVAS_DIMS[0]/2 - frame.get_canvas_textwidth('BLACKJACK', 60, 'sans-serif')/2
+    canvas.draw_text('BLACKJACK', (titlePos, 80), 60, 'Black', 'sans-serif') 
+    canvas.draw_image(game.titleImg, (660/2, 660/2), (660, 660), (titlePos - 30, 60), (70, 70))
+    canvas.draw_image(game.titleImg, (660/2, 660/2), (660, 660), (titlePos + frame.get_canvas_textwidth('BLACKJACK', 60, 'sans-serif') + 30, 60), (70, 70))
+    
+    #drawing on screen buttons and text
+    canvas.draw_polygon([(game.middleCanvas - 60, 540), (game.middleCanvas - 60, 585), (game.middleCanvas + 60, 585), (game.middleCanvas + 60, 540)], 1, '#D8D8D8', '#D8D8D8')
+    canvas.draw_polygon([(game.middleCanvas - 180 - game.buttonGap, 540), (game.middleCanvas - 180 - game.buttonGap, 585), (game.middleCanvas - 60 - game.buttonGap, 585), (game.middleCanvas - 60 - game.buttonGap, 540)], 1, '#D8D8D8', '#D8D8D8')
+    canvas.draw_polygon([(game.middleCanvas + 60 + game.buttonGap, 540), (game.middleCanvas + 60 + game.buttonGap, 585), (game.middleCanvas + 180 + game.buttonGap, 585), (game.middleCanvas + 180 + game.buttonGap, 540)], 1, '#D8D8D8', '#D8D8D8')
+    canvas.draw_text('HIT', (game.middleCanvas - frame.get_canvas_textwidth('HIT', 20, 'monospace')/2, 570), 20, 'Black', 'monospace')
+    canvas.draw_text('DEAL', (game.middleCanvas - game.buttonGap - 120 - frame.get_canvas_textwidth('DEAL', 20, 'monospace')/2, 570), 20, 'Black', 'monospace')
+    canvas.draw_text('STAND', (game.middleCanvas + game.buttonGap + 120 - frame.get_canvas_textwidth('STAND', 20, 'monospace')/2, 570), 20, 'Black', 'monospace')
+    
+    #drawing names of table, score, deck and message
+    canvas.draw_text('DEALER', (50, 200), 30, 'Black', 'sans-serif')
+    canvas.draw_text('PLAYER', (50, 400), 30, 'Black', 'sans-serif')
+    canvas.draw_text('Score:', (820, 530), 20, 'Black', 'sans-serif')
+    canvas.draw_text(str(game.playerTotalScore), (820, 570), 40, 'Black', 'sans-serif')
+    canvas.draw_text(game.message, (game.CANVAS_DIMS[0]/2 - frame.get_canvas_textwidth(game.message, 20, 'sans-serif')/2, 110), 20, 'Black', 'sans-serif')
+    game.draw_back(canvas, [800, 100])
+    
+    #setting constants for the card animation
+    for i in game.player.currentHand:
+        game.xDist -= 80
+
+    #for card animation
+    if (game.drawCard == True):
+        game.useCover = True
+        game.draw_back(canvas, [game.xPos, game.yPos])
+        game.xPos -= game.xDist/40
+        game.yPos += 37/4
+        if (game.yPos >= 470):
+            game.useCover = False
+            game.xPos = 800
+            game.yPos = 100
+            game.drawCard = False
+            
+    game.xDist = 800
+
+    #drawing the hand
+    game.player.player_draw(canvas, [80, 470])
+    game.dealer.dealer_draw(canvas, [80, 270])        
+    
+    #hiding one of dealers cards
+    if (game.dealerPlaying == False):
+        if (game.gameStart == True):
+            game.draw_back(canvas, [160, 270])
+            
+def mouse_handler(position):
+    
+    #hit (middle) button
+    if (position[0] >= game.middleCanvas - 60 and position[0] <= game.middleCanvas + 60):
+        if (position[1] >= 540 and position[1] <= 585):
+            game.hit_handler()
+            
+    #deal (left) button
+    if (position[0] >= game.middleCanvas - 180 - game.buttonGap and position[0] <= game.middleCanvas - 60 - game.buttonGap):
+            game.deal_handler()
+            
+    #stand (right) button
+    if (position[0] >= game.middleCanvas + 60 + game.buttonGap and position[0] <= game.middleCanvas + 180 + game.buttonGap):
+        if (position[1] >= 540 and position[1] <= 585):
+            game.stand_handler()
+    
+
+#frame and buttons
+frame = simplegui.create_frame("Blackjack", game.CANVAS_DIMS[0], game.CANVAS_DIMS[1], 100)
+frame.set_canvas_background('Green')
+frame.set_draw_handler(draw_handler)
+frame.set_mouseclick_handler(mouse_handler)
+
+dealButton = frame.add_button('Deal', game.deal_handler, 80)
+hitButton = frame.add_button('Hit', game.hit_handler, 80)
+standButton = frame.add_button('Stand', game.stand_handler, 80)
+
+frame.start()

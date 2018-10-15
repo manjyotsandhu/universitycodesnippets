@@ -1,0 +1,28 @@
+Johannes's awesome GIT cheatsheet
+
+get branch
+git clone -b <branch name> <url of repos>
+
+commit all changed files
+git commit -a -m „message“
+
+easy way to push everything
+git add —all
+git commit -am „message“
+git push
+
+import maven project
+import.. > existing maven project > [root dir = dir the clone of pom file is] > finish
+
+exporting maven project
+team > share project > etc.. > commit > push
+
+remove dir
+git rm -r <directory>
+commit..
+
+get updates from master branch
+(in the current branch)
+git fetch origin
+git merge origin/master
+git push

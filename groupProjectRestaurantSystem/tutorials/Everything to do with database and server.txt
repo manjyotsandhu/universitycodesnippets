@@ -1,0 +1,76 @@
+Everything to do with database and server.txt
+
+HOW TO CONNECT TO THE DATABASE:
+if on windows -> download cygwin and psql for it (google how to do that)
+
+if on mac -> 
+1. download homebrew http://brew.sh/
+2. type into command line "brew install psql"
+
+on cygwin/terminal:
+
+copy and paste : psql postgres://cbxogyauomxmjz:6130127d6f1f481884be3217d564fb445931a40fbf6232cea28a67ff4be487a5@ec2-54-75-237-110.eu-west-1.compute.amazonaws.com:5432/d4p5pchqe16vsu
+
+Now you should be connected to the database! do what you like! (with reason)
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+INSTRUCTIONS for downloading the httpclient on eclipse
+1. go to https://hc.apache.org/downloads.cgi
+2. if you are on windows, download the ZIP. for mac/unix get the tar
+3. on the eclipse screen, go on project preferences -> java build path
+4. click add external jars -> search for all the external jars and add them
+5. now the ServerClient is error free! :D
+
+-------------------------------------------------------------------------------------------------------------------------
+
+example: to get the menu ->
+
+  private ServerClient sercli = new ServerClient();
+  private StringBuffer currResponse = new StringBuffer();
+  private MenuItems mitems = new MenuItems();
+  
+  
+  public List<MenuItem> getMenu() {
+    currResponse = sercli.httpGet("http://shouganai.net:8080/restaurant/rest/menuitems");
+    mitems = (MenuItems) sercli.convertXML(currResponse, MenuItems.class);
+ 
+    return mitems.getItems();
+  }
+
+  //just a note that during my demonstration I realised that I was doing way more work than I was supposed
+  //to be doing so you could have skipped an entire step.
+
+-------------------------------------------------------------------------------------------------------------------------
+
+  Here is an example of how you can write your getXML method in your class!
+
+//remember to use StringBuffer!
+  public StringBuffer getXML() {
+    StringBuffer answer = new StringBuffer();
+    answer.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?> \n");
+    answer.append("<account>\n");
+    answer.append("<accountid>" + this.getAccountID() + "</accountid> \n");
+    answer.append("<password>" + this.getPassword() + "</password> \n");
+    answer.append("<accountype>" + this.getAccountType() + "</accounttype> \n");
+    answer.append("</account> \n");
+
+    return answer;
+  }
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+  All the links that are available right now: try them out in your browser! (browsers just use GET requests)
+
+	http://shouganai.net:8080/restaurant/rest/menuitems
+	http://shouganai.net:8080/restaurant/rest/menuitems/{menuitemID}
+	http://shouganai.net:8080/restaurant/rest/ingredients
+	http://shouganai.net:8080/restaurant/rest/ingredients/{ingredientID}
+	http://shouganai.net:8080/restaurant/rest/orders
+	http://shouganai.net:8080/restaurant/rest/orders/{orderID}
+
+If you have any other question about how the server responds, how everything works or if anything should be changed; feel free to message me or ask me in person!
+

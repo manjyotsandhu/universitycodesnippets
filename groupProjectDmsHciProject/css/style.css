@@ -1,0 +1,598 @@
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    background-color: #70db70;
+}
+
+.overlay {
+    background: #4d4d4d;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+    width: 100%;
+}
+
+#userPane {
+    width: 49%;
+    float: left;
+}
+
+#adminPane {
+    width: 49%;
+    float: right;
+}
+
+#loggedIn {}
+
+#documentsPane {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+#documentsFilterPane {
+    right: 0px;
+    top: 6%;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    min-width: 330px;
+    /*box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);*/
+}
+
+#listDocumentsPane{
+    background: transparent;
+    height: 100%;
+    width: 100%;
+}
+
+#documentsMain {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+#tagsFilterPane {
+    right: 0px;
+    top: 6%;
+     width: 30%;
+     height: 40%;
+     position: absolute;
+     min-width: 300px;
+    /*box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);*/
+    
+}
+
+#uploadDocumentPane {
+    width: 100%;
+}
+
+#createTagPane {
+    width: 100%;
+}
+
+#tagsPane {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+#logInPane {
+    width: 350px;
+    height: 32%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #f5f5f0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+#logInBox {
+    padding: 25px;
+}
+
+#registerPane {
+    width: 350px;
+    height: 57%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #f5f5f0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+#registerDonePane {
+    width: 350px;
+    height: 35%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #f5f5f0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+#passwordPane {
+    width: 350px;
+    height: 32%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #f5f5f0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+#sentPane {
+    width: 350px;
+    height: 32%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #f5f5f0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/* Log in */
+
+
+/* For log in button */
+
+.btn-login {
+    width: 100%;
+    cursor: pointer;
+    background-color: #70db70;
+    color: #FFFFFF;
+    border: 0px;
+    float: right;
+}
+
+.field-login {
+    border: 0px;
+}
+
+
+/* Colour used for log in bg of log in box, icons, text in fields */
+
+.logInColour {
+    color: #d6d6c2;
+}
+
+.logInLinks {
+    color: #999999;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-blue {
+    background-color: #5A51C4;
+}
+
+.register-buttons {
+    cursor: pointer;
+    border: 0px;
+    color: white;
+    width: 100%;
+}
+
+hr {
+    border: none;
+    color: white;
+    height: 1px;
+    background: #d6d6c2;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 350, from(#d6d6c2), to(#fff));
+}
+
+.logInTitle {
+    font-size: 12px;
+    font-style: bold;
+    text-transform: uppercase;
+}
+
+.doneRegisterIcon {
+    width: 30%;
+    color: #FF5733;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* For nav bar */
+
+.nav-btn-style {
+    text-transform: uppercase;
+    color: white !important;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-btn-style:hover {
+    color: darkgreen !important;
+}
+
+.navbar-default {
+    background-color: #70db70;
+    border: 0px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #196619;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+    background-color: #70db70;
+    color: #555555;
+}
+
+
+/* Uploading document */
+
+
+/* Contains all fields for an upload */
+
+.upload-container {
+    width: 100%;
+    padding: 20px;
+    margin-left: -30px;
+    position: relative;
+}
+
+
+/* Formatting for the upload button */
+
+.upload-buttons {
+    float: right;
+    padding: 10px;
+}
+
+
+/* Formatting for the upload doc fields */
+
+.uploadDocFields {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+
+/* Formatting applied to the header and footer of upload doc modal */
+
+.upload-header {
+    background-color: #70db70;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 0px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    min-width: 122px;
+}
+
+
+/* User management */
+
+.user-name {}
+
+
+/* Document management */
+
+.document-filter-title {
+    font-weight: bold;
+    color: white;
+    text-align: left;
+    background-color: #70db70;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0px;
+    padding-left: 0px;
+}
+
+
+/*************************************************/
+
+.document-filter-list {
+    position: absolute;
+
+    padding: 10px;
+    list-style: none;
+    width: 100%;
+    min-width: 300px;
+}
+/*************************************************/
+
+.document-list-pane {
+    margin-top: -80px;
+    background: transparent;
+    width: 20%;
+    height: 125vw;
+    min-width: 200px;
+}
+
+.document-list-pane li {
+    list-style-type: none;
+    padding-top: 50pt;
+}
+
+
+
+.document-name {
+    width: 15%;
+    min-width: 150px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 20px 30px;
+    color: black;
+    text-align: center+;
+    font: 2.4em DejaVu Sans, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.form-inline {
+    float: right;
+}
+
+.btn-btn-default {
+    float: right;
+}
+
+
+/*************************************************/
+
+.document-name:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    background-color: #aaaaaa;
+}
+
+
+/*************************************************/
+
+.document-information-pane {
+    margin-left: 110%;
+    top: 15%;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    width: 300%;
+    min-width: 650px;
+}
+
+.document-details-pane {
+    width: 100%;
+    padding: 20px;
+}
+
+.document-details {
+    width: 100%;
+}
+
+.document-control-pane {
+    position: relative;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+    background-color: #70db70;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.btn.btn-link.nav-btn-style {
+    text-decoration: none;
+}
+
+.document-comments-pane {
+    width: 80%;
+    margin: auto;
+}
+
+.document-history-pane {}
+
+
+/* Tag management */
+
+
+/* For tag filter side bar */
+
+.tag-filter-title {
+    font-weight: bold;
+    color: white;
+    text-align: left;
+    background-color: #70db70;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0px;
+    padding-left: 0px;
+}
+
+.tag-filter-list {
+    position: absolute;
+    padding: 10px;
+    list-style: none;
+    width: 100%;
+    min-width: 300px;
+}
+
+.tag-list-pane {
+    margin-top: -80px;
+    background: transparent;
+    width: 20%;
+    height: 125vw;
+    min-width: 200px;
+}
+
+.tag-list-pane li:not(.history-list) {
+    list-style-type: none;
+    padding-top: 50pt;
+}
+
+
+.tag-name {
+    width: 15%;
+    min-width: 150px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 20px 30px;
+    color: black;
+    text-align: center+;
+    font: 2.4em DejaVu Sans, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.form-inline {
+    float: right;
+}
+
+.btn-btn-default {
+    float: right;
+}
+
+.tag-name:hover {
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+    background-color: #aaaaaa;
+}
+
+.tag-information-pane {
+    margin-left: 110%;
+    top: 15%;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    width: 300%;
+    min-width: 620px;
+}
+
+.tag-details-pane {
+    width: 100%;
+    padding: 20px;
+}
+
+.tag-details {
+    width: 100%;
+}
+
+.tag-control-pane {
+    position: relative;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+    background-color: #70db70;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.btn.btn-link.nav-btn-style {
+    text-decoration: none;
+}
+
+.tag-history-pane {}
+
+
+/* Names and values of document/tag properties */
+
+.property-name {
+    font-weight: bold;
+    text-align: right;
+    width: 30%;
+    padding: 20px;
+}
+
+.property-value {
+    width: 100%;
+}
+
+
+/* Comments */
+
+.comment-list {}
+
+
+.comment-text {
+    
+}
+
+.comment-info {
+    
+}
+
+.comment-text-box {
+    margin-top:10px;
+    width: 100%;
+    float: right;
+}
+
+.comment-button {
+    margin-top: 10px;
+    float: right;
+}
+
+/* Events */
+
+.event-list {
+    padding: 20px;
+}
+
+.event-date {
+    font-weight: bold;
+}
+
+.event-description {
+    font-style: italic;
+    padding-left: 10px;
+}
+
+.history-list {
+    padding: 5px;
+}
+
+.history-list {
+    list-style-type: none;
+}
+
+.confirmMapButton {
+    background-color: transparent;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.thumbnail {
+    padding:0px;
+}
